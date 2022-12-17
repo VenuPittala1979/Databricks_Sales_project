@@ -200,6 +200,10 @@
 				"typeProperties": {
 					"notebookPath": "/Shared/Pyspark_Project_Dynamic/NB_sales_landing_staging",
 					"baseParameters": {
+						"landing_zone_file_path": {
+							"value": "@pipeline().parameters.landing_zone_file_path",
+							"type": "Expression"
+						},
 						"landing_zone_folder_name": {
 							"value": "@pipeline().parameters.landing_zone_folder_name",
 							"type": "Expression"
