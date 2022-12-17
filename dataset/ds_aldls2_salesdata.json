@@ -1,0 +1,25 @@
+{
+	"name": "ds_aldls2_salesdata",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adls2_source",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"ds_folder_name": {
+				"type": "string"
+			},
+			"ds_file_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "salesdata"
+			}
+		}
+	}
+}
