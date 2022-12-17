@@ -16,8 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "AzureDatabricksDeltaLakeSource",
-						"query": "insert into JOBS.pipeline_log select \nsha2('@{pipeline().RunId}',256),@{pipeline().parameters.job_id},'@{pipeline().DataFactory}','@{pipeline().Pipeline}','@{pipeline().RunId}','@{pipeline().TriggerType}','@{pipeline().TriggerId}','\n@{pipeline().TriggerName}', '@{pipeline().TriggerTime}','','','','','','','','','','','','','','','','','','','','','','','',''"
+						"type": "AzureDatabricksDeltaLakeSource"
 					},
 					"dataset": {
 						"referenceName": "ds_deltalake_lookup",
@@ -26,9 +25,16 @@
 				}
 			},
 			{
-				"name": "Get Metadata1",
+				"name": "Get Metadata_Onprem",
 				"type": "GetMetadata",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "StartLogging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -36,7 +42,32 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "ds_adls2_source",
+						"type": "DatasetReference",
+						"parameters": {
+							"ds_folder_name": {
+								"value": "@pipeline().parameters.source_folder_name",
+								"type": "Expression"
+							}
+						}
+					},
+					"fieldList": [
+						"childItems",
+						"itemName",
+						"itemType",
+						"lastModified"
+					],
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
 			},
 			{
 				"name": "Filter1",
@@ -83,6 +114,21 @@
 				"type": "string"
 			},
 			"curation_zone_database_name": {
+				"type": "string"
+			},
+			"source_folder_name": {
+				"type": "string"
+			},
+			"dw_zone_table_pk_column": {
+				"type": "string"
+			},
+			"dw_zone_table_name": {
+				"type": "string"
+			},
+			"dw_zone_database_name": {
+				"type": "string"
+			},
+			"table_type": {
 				"type": "string"
 			}
 		},
