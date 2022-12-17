@@ -1,0 +1,17 @@
+{
+	"name": "ls_file_onprem_source",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "FileServer",
+		"typeProperties": {
+			"host": "C:\\Project\\SH",
+			"userId": "s.rakashi@dxc.com",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJiZWVhZmI3MC00ODBiLTQwZDktYTFlMy01NzcyNDZkMDg0OGUiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "selfhosted-IR",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
