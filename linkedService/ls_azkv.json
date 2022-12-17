@@ -1,0 +1,10 @@
+{
+	"name": "ls_azkv",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://projectazkv.vault.azure.net/"
+		}
+	}
+}
