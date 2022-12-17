@@ -1,0 +1,33 @@
+{
+	"name": "ds_adls2_binarysource",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adls2_source",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"ds_foldername": {
+				"type": "string"
+			},
+			"ds_filename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().ds_filename",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@concat('sales','/',dataset().ds_foldername)",
+					"type": "Expression"
+				},
+				"fileSystem": "source"
+			}
+		}
+	}
+}
