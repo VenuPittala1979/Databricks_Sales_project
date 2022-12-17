@@ -1,0 +1,19 @@
+{
+	"name": "ls_ datbricks_notebooks",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDatabricks",
+		"typeProperties": {
+			"domain": "https://adb-2349866804351260.0.azuredatabricks.net",
+			"accessToken": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "ls_azkv",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "projectazkvadbkey"
+			},
+			"existingClusterId": "1217-035912-arqprkso"
+		}
+	}
+}
