@@ -679,15 +679,6 @@
 			"pyspark_schema": {
 				"type": "string"
 			},
-			"staging_zone_table_pk_column": {
-				"type": "string"
-			},
-			"staging_zone_table_name": {
-				"type": "string"
-			},
-			"staging_zone_database_name": {
-				"type": "string"
-			},
 			"landing_zone_file_type": {
 				"type": "string"
 			},
@@ -707,6 +698,15 @@
 				"type": "string"
 			},
 			"curation_zone_database_name": {
+				"type": "string"
+			},
+			"staging_zone_table_pk_column": {
+				"type": "string"
+			},
+			"staging_zone_table_name": {
+				"type": "string"
+			},
+			"staging_zone_database_name": {
 				"type": "string"
 			},
 			"source_folder_name": {

@@ -68,18 +68,6 @@
 										"value": "@item().pyspark_schema",
 										"type": "Expression"
 									},
-									"staging_zone_table_pk_column": {
-										"value": "@item().staging_zone_table_pk_column",
-										"type": "Expression"
-									},
-									"staging_zone_table_name": {
-										"value": "@item().staging_zone_table_name",
-										"type": "Expression"
-									},
-									"staging_zone_database_name": {
-										"value": "@item().staging_zone_database_name",
-										"type": "Expression"
-									},
 									"landing_zone_file_type": {
 										"value": "@item().landing_zone_file_type",
 										"type": "Expression"
@@ -106,6 +94,18 @@
 									},
 									"curation_zone_database_name": {
 										"value": "@item().curation_zone_database_name",
+										"type": "Expression"
+									},
+									"staging_zone_table_pk_column": {
+										"value": "@item().staging_zone_table_pk_column",
+										"type": "Expression"
+									},
+									"staging_zone_table_name": {
+										"value": "@item().staging_zone_table_name",
+										"type": "Expression"
+									},
+									"staging_zone_database_name": {
+										"value": "@item().staging_zone_database_name",
 										"type": "Expression"
 									}
 								}
