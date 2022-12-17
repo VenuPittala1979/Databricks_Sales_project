@@ -25,7 +25,7 @@
 				}
 			},
 			{
-				"name": "Get Metadata_Onprem",
+				"name": "Get Metadata_adls2",
 				"type": "GetMetadata",
 				"dependsOn": [
 					{
@@ -70,10 +70,112 @@
 				}
 			},
 			{
-				"name": "Filter1",
+				"name": "Filter_Files",
 				"type": "Filter",
-				"dependsOn": [],
-				"userProperties": []
+				"dependsOn": [
+					{
+						"activity": "Get Metadata_adls2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata_adls2').output",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(item().type,'File')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ForEach_CopyFile",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Filter_Files",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Filter_Files').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "adls2_landing",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "BinarySource",
+									"storeSettings": {
+										"type": "AzureBlobFSReadSettings",
+										"recursive": true
+									},
+									"formatSettings": {
+										"type": "BinaryReadSettings"
+									}
+								},
+								"sink": {
+									"type": "BinarySink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "ds_adls2_binarysource",
+									"type": "DatasetReference",
+									"parameters": {
+										"ds_foldername": {
+											"value": "@pipeline().parameters.source_folder_name",
+											"type": "Expression"
+										},
+										"ds_filename": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "ds_aldls2_salesdata",
+									"type": "DatasetReference",
+									"parameters": {
+										"ds_folder_name": {
+											"value": "@pipeline().parameters.landing_zone_folder_name",
+											"type": "Expression"
+										},
+										"ds_file_name": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
 			}
 		],
 		"parameters": {
