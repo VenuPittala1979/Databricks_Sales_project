@@ -1,0 +1,19 @@
+{
+	"name": "ls_deltalake",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDatabricksDeltaLake",
+		"typeProperties": {
+			"domain": "https://adb-2349866804351260.0.azuredatabricks.net",
+			"clusterId": "1217-035912-arqprkso",
+			"accessToken": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "ls_azkv",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "projectazkvadbkey"
+			}
+		}
+	}
+}
