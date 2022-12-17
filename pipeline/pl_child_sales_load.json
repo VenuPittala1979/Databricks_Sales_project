@@ -1,6 +1,50 @@
 {
 	"name": "pl_child_sales_load",
 	"properties": {
+		"activities": [
+			{
+				"name": "StartLogging",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureDatabricksDeltaLakeSource",
+						"query": "insert into JOBS.pipeline_log select \nsha2('@{pipeline().RunId}',256),@{pipeline().parameters.job_id},'@{pipeline().DataFactory}','@{pipeline().Pipeline}','@{pipeline().RunId}','@{pipeline().TriggerType}','@{pipeline().TriggerId}','\n@{pipeline().TriggerName}', '@{pipeline().TriggerTime}','','','','','','','','','','','','','','','','','','','','','','','',''"
+					},
+					"dataset": {
+						"referenceName": "ds_deltalake_lookup",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": []
+			},
+			{
+				"name": "Filter1",
+				"type": "Filter",
+				"dependsOn": [],
+				"userProperties": []
+			}
+		],
 		"parameters": {
 			"job_id": {
 				"type": "string"
