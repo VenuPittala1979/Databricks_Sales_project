@@ -23,7 +23,7 @@
 					"type": "Expression"
 				},
 				"folderPath": {
-					"value": "@dataset().ds_folder_name",
+					"value": "@concat('landing/sales/',dataset().ds_folder_name)",
 					"type": "Expression"
 				},
 				"fileSystem": "salesdata"
