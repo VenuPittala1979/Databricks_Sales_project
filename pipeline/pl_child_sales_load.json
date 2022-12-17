@@ -466,6 +466,131 @@
 								"referenceName": "ls_ datbricks_notebooks",
 								"type": "LinkedServiceReference"
 							}
+						},
+						{
+							"name": "CurationToDWHDim_Log",
+							"type": "Lookup",
+							"dependsOn": [
+								{
+									"activity": "CurationToDWHDim",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureDatabricksDeltaLakeSource",
+									"query": "UPDATE JOBS.pipeline_log SET \nexecution_status='SUCCESS',dwh_read_rows=@{activity('CurationToDWHDim').output.runOutput.dwhRows['num_affected_rows']},dwh_inserted_rows=@{activity('CurationToDWHDim').output.runOutput.dwhRows['num_inserted_rows']},dwh_updated_rows=@{activity('CurationToDWHDim').output.runOutput.dwhRows['num_updated_rows']} WHERE pipeline_runid='@{pipeline().RunId}'"
+								},
+								"dataset": {
+									"referenceName": "ds_deltalake_lookup",
+									"type": "DatasetReference"
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "SwitchFacts",
+				"type": "Switch",
+				"dependsOn": [
+					{
+						"activity": "IFDim",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"on": {
+						"value": "@pipeline().parameters.job_name",
+						"type": "Expression"
+					},
+					"cases": [
+						{
+							"value": "sales_transaction",
+							"activities": [
+								{
+									"name": "CurationTodwhSalesFact",
+									"type": "DatabricksNotebook",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"notebookPath": "/Shared/Pyspark_Project_Dynamic/NB_sales_fact_load",
+										"baseParameters": {
+											"staging_zone_database_name": {
+												"value": "@pipeline().parameters.staging_zone_database_name",
+												"type": "Expression"
+											},
+											"staging_zone_table_name": {
+												"value": "@pipeline().parameters.staging_zone_table_name",
+												"type": "Expression"
+											},
+											"staging_zone_table_pk_column": {
+												"value": "@pipeline().parameters.staging_zone_table_pk_column",
+												"type": "Expression"
+											},
+											"curation_zone_database_name": {
+												"value": "@pipeline().parameters.curation_zone_database_name",
+												"type": "Expression"
+											},
+											"curation_zone_table_name": {
+												"value": "@pipeline().parameters.curation_zone_table_name",
+												"type": "Expression"
+											},
+											"curation_zone_table_pk_column": {
+												"value": "@pipeline().parameters.curation_zone_table_pk_column",
+												"type": "Expression"
+											},
+											"dw_zone_database_name": {
+												"value": "@pipeline().parameters.dw_zone_database_name",
+												"type": "Expression"
+											},
+											"dw_zone_table_name": {
+												"value": "@pipeline().parameters.dw_zone_table_name",
+												"type": "Expression"
+											},
+											"dw_zone_table_pk_column": {
+												"value": "@pipeline().parameters.dw_zone_table_pk_column",
+												"type": "Expression"
+											},
+											"job_id": {
+												"value": "@pipeline().parameters.job_id",
+												"type": "Expression"
+											},
+											"job_name": {
+												"value": "@pipeline().parameters.job_name",
+												"type": "Expression"
+											}
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "ls_ datbricks_notebooks",
+										"type": "LinkedServiceReference"
+									}
+								}
+							]
+						},
+						{
+							"value": "cost_transaction"
 						}
 					]
 				}
