@@ -16,7 +16,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "AzureDatabricksDeltaLakeSource"
+						"type": "AzureDatabricksDeltaLakeSource",
+						"query": "insert into JOBS.pipeline_log select \nsha2('@{pipeline().RunId}',256),@{pipeline().parameters.job_id},'@{pipeline().DataFactory}','@{pipeline().Pipeline}','@{pipeline().RunId}','@{pipeline().TriggerType}','@{pipeline().TriggerId}','\n@{pipeline().TriggerName}', '@{pipeline().TriggerTime}','','','','','','','','','','','','','','','','','','','','','','','',''"
 					},
 					"dataset": {
 						"referenceName": "ds_deltalake_lookup",
