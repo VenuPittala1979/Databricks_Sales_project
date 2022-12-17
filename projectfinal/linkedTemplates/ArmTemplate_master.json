@@ -1,0 +1,91 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "projectfinal"
+		},
+		"ls_file_onprem_source_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ls_file_onprem_source'"
+		},
+		"ls_adls2_source_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ls_adls2_source'"
+		},
+		"ls_azkv_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://projectazkv.vault.azure.net/"
+		},
+		"ls_file_onprem_source_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "C:\\Project\\SH"
+		},
+		"ls_file_onprem_source_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "s.rakashi@dxc.com"
+		},
+		"ls_adls2_source_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://projectfinalsa.dfs.core.windows.net/"
+		},
+		"ls_ datbricks_notebooks_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "1217-035912-arqprkso"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "projectfinal_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"ls_adls2_source_accountKey": {
+						"value": "[parameters('ls_adls2_source_accountKey')]"
+					},
+					"ls_file_onprem_source_password": {
+						"value": "[parameters('ls_file_onprem_source_password')]"
+					},
+					"ls_azkv_properties_typeProperties_baseUrl": {
+						"value": "[parameters('ls_azkv_properties_typeProperties_baseUrl')]"
+					},
+					"ls_adls2_source_properties_typeProperties_url": {
+						"value": "[parameters('ls_adls2_source_properties_typeProperties_url')]"
+					},
+					"ls_file_onprem_source_properties_typeProperties_host": {
+						"value": "[parameters('ls_file_onprem_source_properties_typeProperties_host')]"
+					},
+					"ls_file_onprem_source_properties_typeProperties_userId": {
+						"value": "[parameters('ls_file_onprem_source_properties_typeProperties_userId')]"
+					},
+					"ls_ datbricks_notebooks_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('ls_ datbricks_notebooks_properties_typeProperties_existingClusterId')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

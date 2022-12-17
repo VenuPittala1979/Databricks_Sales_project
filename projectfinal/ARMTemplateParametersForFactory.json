@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "projectfinal"
+		},
+		"ls_file_onprem_source_password": {
+			"value": ""
+		},
+		"ls_adls2_source_accountKey": {
+			"value": ""
+		},
+		"ls_azkv_properties_typeProperties_baseUrl": {
+			"value": "https://projectazkv.vault.azure.net/"
+		},
+		"ls_file_onprem_source_properties_typeProperties_host": {
+			"value": "C:\\Project\\SH"
+		},
+		"ls_file_onprem_source_properties_typeProperties_userId": {
+			"value": "s.rakashi@dxc.com"
+		},
+		"ls_adls2_source_properties_typeProperties_url": {
+			"value": "https://projectfinalsa.dfs.core.windows.net/"
+		},
+		"ls_ datbricks_notebooks_properties_typeProperties_existingClusterId": {
+			"value": "1217-035912-arqprkso"
+		}
+	}
+}
