@@ -22,7 +22,8 @@
 					"dataset": {
 						"referenceName": "ds_deltalake_lookup",
 						"type": "DatasetReference"
-					}
+					},
+					"firstRowOnly": false
 				}
 			},
 			{
